@@ -1,4 +1,5 @@
 package com.example;
+import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 
 import com.mojang.brigadier.context.StringRange;
@@ -123,15 +124,14 @@ public class TemplateModClient implements ClientModInitializer {
 		// This entrypoint is suitable for setting up client-specific logic, such as rendering.
 		ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
 			dispatcher.register(
-					ClientCommandManager.literal("getSigns")
+					ClientCommandManager.literal("getSigns").then(ClientCommandManager.argument("radius", IntegerArgumentType.integer(16,2048))
 									.executes(context -> {
 										LOGGER.info("getSigns called");
-										getNearbySigns(MinecraftClient.getInstance().player.getBlockPos(), RADIUS);
+										getNearbySigns(MinecraftClient.getInstance().player.getBlockPos(), IntegerArgumentType.getInteger(context,"radius"));
 										writeToCSV(signs);
-										Supplier<Text> sup = () -> Text.literal("Called /getSigns");
 										context.getSource().sendFeedback(Text.literal("Called /getSigns"));
 										return 1;
-									})
+									}))
 						);
 		});
 	}
