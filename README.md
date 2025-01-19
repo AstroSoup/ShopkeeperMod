@@ -9,3 +9,5 @@ Download and install mod as you would any other fabric mod. Write command /getSi
 - Find a way to process signs in any language
 - add a command that would search area for a shop with specified item
 - add more options for output format
+- find a way to unpack data from shulkerboxes
+- find a way to process shops in unloaded chuncks.
